@@ -7,6 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+  @ratings = Movie.ratings
     if params[:sort]!=nil
       @sortby = params[:sort]
       @movies = Movie.all(:order => "#{@sortby} ASC" )
