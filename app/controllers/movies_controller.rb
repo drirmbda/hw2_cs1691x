@@ -10,7 +10,11 @@ class MoviesController < ApplicationController
     if params[:sort]!=nil
       @sortby = params[:sort]
       @movies = Movie.all(:order => "#{@sortby} ASC" )
-      flash.now[:sort] = @sortby
+      flash[:sort] = @sortby
+    end
+    if flash[:sort]!=nil
+      @sortby = flash[:sort]
+      @movies = Movie.all(:order => "#{@sortby} ASC" )
     else
       @movies = Movie.all
     end
