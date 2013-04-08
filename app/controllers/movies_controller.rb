@@ -15,6 +15,7 @@ class MoviesController < ApplicationController
     if flash[:sort]!=nil
       @sortby = flash[:sort]
       @movies = Movie.all(:order => "#{@sortby} ASC" )
+      flash[:sort] = @sortby
     else
       @movies = Movie.all
     end
