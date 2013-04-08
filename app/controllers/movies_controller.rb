@@ -9,12 +9,22 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.ratings
     if @selectragins==nil then @selectratings = @all_ratings end
+    if (params[:sort]==nil) && (session[:sort]!=nil)
+      @sortby = session[:sort]
+      flash.keep
+      redirect_to movies_path(:sort => @sortby)
+    end
+    if params[:ratings]==nil && session[:ratings]!=nil
+      @selectratings = session[:ratings].keys
+      flash[:ratings]=@selectratings
+    end
     if flash[:ratings]!=nil
       @selectratings = flash[:ratings]
       flash[:ratings]=@selectratings
     end
     if params[:ratings]!=nil
       @selectratings = params[:ratings].keys
+      session[:ratings]= params[:ratings]
       flash[:ratings]=@selectratings
     end
     if params[:sort]!=nil
@@ -29,6 +39,7 @@ class MoviesController < ApplicationController
     else
       @movies = Movie.where(:rating => @selectratings).all
     end
+    session[:sort] = @sortby
   end
 
   def new
