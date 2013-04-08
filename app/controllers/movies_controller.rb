@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
       @movies = Movie.where(:rating => @selectratings).order("#{@sortby} ASC" ).all
       flash[:sort] = @sortby
     else
-      @movies = Movie.all
+      @movies = Movie.where(:rating => @selectratings).all
     end
   end
 
